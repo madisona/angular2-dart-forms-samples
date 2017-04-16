@@ -1,0 +1,60 @@
+<h1>My First AngularDart App</h1>
+
+<div class="layout vertical">
+    <div>
+        Valid: {{sampleForm.valid}}
+        Pristine: {{sampleForm.pristine}}
+    </div>
+    <form [ngFormModel]="sampleForm">
+        <material-input #myInput
+                        label="Your name"
+                        ngControl="name"
+                        [required]="true"
+                        [(ngModel)]="formStuff['name']"
+                        floatingLabel
+                        autoFocus>
+        </material-input>
+
+        <material-input #phoneInput
+                        label="Phone"
+                        [error]="sampleForm.controls['phone'].errors != null ? '###-###-####' : ''"
+                        ngControl="phone"
+                        hintText="###-###-####"
+                        floatingLabel>
+        </material-input>
+
+        <div ngControlGroup="loginForm">
+            <material-input #usernameInput
+                            label="Username"
+                            ngControl="username"
+                            floatingLabel>
+            </material-input>
+
+            <material-input #passwordInput
+                            label="Password"
+                            [error]="sampleForm.controls['loginForm'].controls['password'].hasError('minlength') ? 'Must be at least 8 Characters' : ''"
+                            ngControl="password"
+                            floatingLabel
+                            type="password">
+            </material-input>
+        </div>
+
+
+            Login Form Valid: {{sampleForm.controls['loginForm'].valid}}<br />
+            Password Errors: {{sampleForm.controls['loginForm'].controls['password'].errors}}
+
+        <pre>{{value}}</pre>
+    </form>
+</div>
+<material-button raised 
+                 (trigger)="myDialog.open()"
+                 class="blue"
+                 [disabled]="!sampleForm.valid">
+    Say Hello
+</material-button>
+
+
+
+<hello-dialog #myDialog
+             [name]="myInput.inputText">
+</hello-dialog>
