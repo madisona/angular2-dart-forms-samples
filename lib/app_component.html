@@ -32,7 +32,7 @@
 
             <material-input #passwordInput
                             label="Password"
-                            [error]="sampleForm.controls['loginForm'].controls['password'].hasError('minlength') ? 'Must be at least 8 Characters' : ''"
+                            [error]="sampleForm.controls['loginForm'].controls['password'].hasError('minLength') ? 'Must be at least 8 Characters' : ''"
                             ngControl="password"
                             floatingLabel
                             type="password">
@@ -46,8 +46,7 @@
         <pre>{{value}}</pre>
     </form>
 </div>
-<material-button raised 
-                 (trigger)="myDialog.open()"
+<material-button raised
                  class="blue"
                  [disabled]="!sampleForm.valid">
     Say Hello
@@ -55,6 +54,4 @@
 
 
 
-<hello-dialog #myDialog
-             [name]="myInput.inputText">
-</hello-dialog>
+<dynamic-form></dynamic-form>

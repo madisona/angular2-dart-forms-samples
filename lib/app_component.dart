@@ -6,14 +6,14 @@ import 'package:angular2/core.dart';
 import 'package:angular2/common.dart';
 import 'package:angular2_components/angular2_components.dart';
 
-import 'hello_dialog/hello_dialog.dart';
+import 'hello_dialog/dynamic_form.dart';
 
 @Component(
   selector: 'my-app',
   styleUrls: const ['app_component.css'],
   templateUrl: 'app_component.html',
   viewBindings: const [FORM_BINDINGS],
-  directives: const [materialDirectives, HelloDialog, FORM_DIRECTIVES],
+  directives: const [materialDirectives, DynamicFormComponent, FORM_DIRECTIVES],
   providers: const [materialProviders],
 )
 class AppComponent {

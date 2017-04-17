@@ -1,0 +1,22 @@
+
+<h2>Dynamic Form</h2>
+    <form [ngFormModel]="dynamicForm">  <!-- (ngSubmit)="save(dynamicForm)" -->
+      <material-input label="Your name"
+                      ngControl="name"
+                      <!--[required]="true"-->
+                      <!--[(ngModel)]="formStuff['name']"-->
+                      floatingLabel
+                      autoFocus>
+      </material-input>
+      <div footer>
+        <material-button raised
+                         clear-size
+                         type="submit"
+                         [disabled]="!dynamicForm.valid"
+                         (trigger)=save(dynamicForm)>
+          Submit
+        </material-button>
+
+      </div>
+
+    </form>
