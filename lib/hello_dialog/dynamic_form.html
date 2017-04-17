@@ -3,19 +3,68 @@
     <form [ngFormModel]="dynamicForm">  <!-- (ngSubmit)="save(dynamicForm)" -->
       <material-input label="Your name"
                       ngControl="name"
-                      <!--[required]="true"-->
-                      <!--[(ngModel)]="formStuff['name']"-->
                       floatingLabel
                       autoFocus>
       </material-input>
+
+        <div ngControlGroup="addresses">
+          <div *ngFor="let addressForm of dynamicForm.controls['addresses'].controls; let i = index">
+              Street Address {{ i + 1 }}
+
+              <div [ngControlGroup]="i">
+                  <material-input label="Street Address"
+                                  ngControl="streetAddress"
+                                  floatingLabel
+                                  >
+                  </material-input>
+                  <material-input label="City"
+                                  ngControl="city"
+                                  floatingLabel>
+
+                  </material-input>
+                  <material-input label="State"
+                                  ngControl="state"
+                                  floatingLabel
+                  >
+                  </material-input>
+                  <material-input label="ZIP Code"
+                                  ngControl="zipCode"
+                                  floatingLabel
+                  >
+                  </material-input>
+                  <material-button raised
+                                   icon
+                                   materialTooltip="Remove Address"
+                                   (trigger)="removeAddress(i)"
+                                   *ngIf="dynamicForm.controls['addresses'].controls.length > 1">
+                      <glyph icon="delete"></glyph>
+                  </material-button>
+              </div>
+          </div>
+        </div>
+        <material-button raised
+                         icon
+                         materialTooltip="Add Address"
+                         (trigger)="addAddress()">
+            <glyph icon="add"></glyph>
+        </material-button>
+
       <div footer>
         <material-button raised
                          clear-size
-                         type="submit"
                          [disabled]="!dynamicForm.valid"
                          (trigger)=save(dynamicForm)>
           Submit
         </material-button>
+          <p>
+              Valid: --{{dynamicForm.valid}}--<br />
+              Addresses Valid: {{dynamicForm.controls['addresses'].valid}}<br />
+          </p>
+
+
+
+        <pre>{{debug}}</pre>
+
 
       </div>
 

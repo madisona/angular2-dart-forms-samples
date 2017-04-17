@@ -2,8 +2,8 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:convert';
+import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart';
-import 'package:angular2/common.dart';
 import 'package:angular2_components/angular2_components.dart';
 
 import 'hello_dialog/dynamic_form.dart';
@@ -12,7 +12,6 @@ import 'hello_dialog/dynamic_form.dart';
   selector: 'my-app',
   styleUrls: const ['app_component.css'],
   templateUrl: 'app_component.html',
-  viewBindings: const [FORM_BINDINGS],
   directives: const [materialDirectives, DynamicFormComponent, FORM_DIRECTIVES],
   providers: const [materialProviders],
 )

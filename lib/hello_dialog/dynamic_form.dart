@@ -21,13 +21,39 @@ class DynamicFormComponent implements OnInit {
   // looks like we'll be able to create a control for each field dynamically.
   Control firstName = new Control("", Validators.required);
 
+  // in a form array, if we do this, it keeps the same values in all of them
+  // which isn't what we want.
+  Control streetAddress = new Control("", Validators.required);
+
   DynamicFormComponent(FormBuilder this._fb);
 
   @override
   ngOnInit() {
     dynamicForm = _fb.group({
       'name': firstName,
+      'addresses': _fb.array([
+        initAddress(),
+      ])
     });
+  }
+
+  ControlGroup initAddress() {
+    return _fb.group({
+      "streetAddress": ['', Validators.required],
+      "city": [''],
+      "state": [''],
+      "zipCode": [''],
+    });
+  }
+
+  void addAddress() {
+    ControlArray control = dynamicForm.controls['addresses'];
+    control.push(initAddress());
+  }
+
+  void removeAddress(dynamic i) {
+    ControlArray control = dynamicForm.controls['addresses'];
+    control.removeAt(i);
   }
 
   void save(ControlGroup form) {
@@ -38,7 +64,8 @@ class DynamicFormComponent implements OnInit {
       print(form.errors);
     }
   }
+
+  String get debug {
+    return new JsonEncoder.withIndent('  ').convert(dynamicForm.value);
+  }
 }
-
-
-
