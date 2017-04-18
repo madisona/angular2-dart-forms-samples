@@ -6,7 +6,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart';
 import 'package:angular2_components/angular2_components.dart';
 
-import 'hello_dialog/dynamic_form.dart';
+import 'dynamic_form/dynamic_form.dart';
 
 @Component(
   selector: 'my-app',
