@@ -32,14 +32,25 @@ class DynamicFormComponent implements OnInit {
   @override
   ngOnInit() {
     document.title = 'awesome sauce form';
+
     // if we're starting with a model, I think we need to set the default
     // for these form controls. Either that or bind ngModel in our form.
     // not sure if one is preferred over the other
     dynamicForm = _fb.group({
-      'name': ['Peggy Sue', Validators.required],
+      'name': ['', Validators.required],
+      'business_name': '',
+      'website': '',
+      'notes': '',
+      'contact_type': ['', Validators.required],
       'addresses': _fb.array([
         initAddress(),
-      ])
+      ]),
+      'phone_numbers': _fb.array([
+        initPhone(),
+      ]),
+      'emails': _fb.array([
+        initEmail(),
+      ]),
     });
   }
 
@@ -52,14 +63,37 @@ class DynamicFormComponent implements OnInit {
     });
   }
 
-  void addAddress() {
-    ControlArray control = dynamicForm.controls['addresses'];
-    control.push(initAddress());
+  ControlGroup initEmail() {
+    return _fb.group({
+      "email": '',
+      "email_type": "",
+    });
   }
 
-  void removeAddress(dynamic i) {
-    ControlArray control = dynamicForm.controls['addresses'];
-    control.removeAt(i);
+  ControlGroup initPhone() {
+    return _fb.group({
+      "phone": '',
+      "phone_type": "",
+    });
+  }
+
+  // Creating a mapping so we don't need so many methods for each of these
+  Map get contactItemLookup {
+    return {
+      'addresses': initAddress,
+      'phone_numbers': initPhone,
+      'emails': initEmail,
+    };
+  }
+
+  void addContactItem(String identifier) {
+    ControlArray control = dynamicForm.controls[identifier];
+    control.push(contactItemLookup[identifier]());
+  }
+
+  void removeContactItem(String identifier, num index) {
+    ControlArray control = dynamicForm.controls[identifier];
+    control.removeAt(index);
   }
 
   void save(ControlGroup form) {
