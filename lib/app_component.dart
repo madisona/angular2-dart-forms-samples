@@ -18,7 +18,7 @@ import 'hello_dialog/dynamic_form.dart';
 class AppComponent {
 
   Map formStuff = {
-//    'name': 'Aaron',
+    'name': 'Aaron',
   };
 
   ControlGroup sampleForm;

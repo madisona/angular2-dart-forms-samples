@@ -2,8 +2,10 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:convert';
+import 'dart:html';
+import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart';
-import 'package:angular2/common.dart';
+
 import 'package:angular2_components/angular2_components.dart';
 
 @Component(
@@ -29,8 +31,12 @@ class DynamicFormComponent implements OnInit {
 
   @override
   ngOnInit() {
+    document.title = 'awesome sauce form';
+    // if we're starting with a model, I think we need to set the default
+    // for these form controls. Either that or bind ngModel in our form.
+    // not sure if one is preferred over the other
     dynamicForm = _fb.group({
-      'name': firstName,
+      'name': ['Peggy Sue', Validators.required],
       'addresses': _fb.array([
         initAddress(),
       ])
