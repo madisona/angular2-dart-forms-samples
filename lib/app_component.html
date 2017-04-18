@@ -6,50 +6,38 @@
         Pristine: {{sampleForm.pristine}}
     </div>
     <form [ngFormModel]="sampleForm">
-        <material-input #myInput
-                        label="Your name"
-                        ngControl="name"
-                        [required]="true"
-                        [(ngModel)]="formStuff['name']"
-                        floatingLabel
-                        autoFocus>
-        </material-input>
-
-        <material-input #phoneInput
-                        label="Phone"
-                        [error]="sampleForm.controls['phone'].errors != null ? '###-###-####' : ''"
-                        ngControl="phone"
-                        hintText="###-###-####"
-                        floatingLabel>
-        </material-input>
-
-        <div ngControlGroup="loginForm">
-            <material-input #usernameInput
-                            label="Username"
-                            ngControl="username"
-                            floatingLabel>
-            </material-input>
-
-            <material-input #passwordInput
-                            label="Password"
-                            [error]="sampleForm.controls['loginForm'].controls['password'].hasError('minLength') ? 'Must be at least 8 Characters' : ''"
-                            ngControl="password"
+        <div *ngFor="let field of config; let i = index">
+            <material-input *ngIf="field['type'] == 'text'"
+                            [label]="field['description']"
+                            [ngControl]="field['name']"
+                            [hintText]="field['help_text']"
                             floatingLabel
-                            type="password">
+                            [autoFocus]="i == 0"> <!-- only autofocus first one -->
             </material-input>
+
+            <div *ngIf="field['type'] == 'select'">
+                <label>{{field['description']}}</label><br />
+                <select [ngControl]="field['name']">
+                    <option *ngFor="let choice of field['choices']" [value]="choice[0]">
+                        {{choice[1]}}
+                    </option>
+                </select>
+                <div *ngIf="sampleForm.controls[field['name']].hasError('required')" style="color: #f00;">{{field['description']}} is Required</div>
+                <!-- Need to be able to show errors -->
+            </div>
+
+            Errors: {{sampleForm.controls[field['name']].errors}}
         </div>
 
-
-            Login Form Valid: {{sampleForm.controls['loginForm'].valid}}<br />
-            Password Errors: {{sampleForm.controls['loginForm'].controls['password'].errors}}
-
-        <pre>{{value}}</pre>
+        {{sampleForm.errors}}
+        <pre>{{debug}}</pre>
     </form>
 </div>
 <material-button raised
                  class="blue"
-                 [disabled]="!sampleForm.valid">
-    Say Hello
+                 [disabled]="!sampleForm.valid"
+                 (trigger)="submitForm()">
+    Submit
 </material-button>
 
 
